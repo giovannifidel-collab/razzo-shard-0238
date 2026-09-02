@@ -1,0 +1,22 @@
+name: GIO Android Source Pack 12
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/gio-source-pack.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  pack:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      PACK_ID: '12'
+      PACK_COUNT: '16'
+      SOURCEPACK_GENERATION: 'v1-20260902'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/giovannifidel-collab/pfarma-ci/d1faf556449562655f2941132c267bf687564345/razzo/gio_os_build/source_pack_worker.sh -o /tmp/gio-pack.sh
+          bash /tmp/gio-pack.sh
